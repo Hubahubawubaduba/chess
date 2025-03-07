@@ -49,7 +49,20 @@ public class Piece {
     // TO BE IMPLEMENTED!
     //return a list of every square that is "controlled" by this piece. A square is controlled
     //if the piece capture into it legally.
-    public ArrayList<Square> getControlledSquares(Square[][] board, Square start) {
+    public ArrayList<Square> getControlledSquares(Square[][] b, Square start) {
+      ArrayList<Square> controlledsqs = new ArrayList<Square>();
+      for (int i = start.getCol()+2; i < 8; i+=2){
+            controlledsqs.add(b[start.getRow()][i]); 
+      }
+      for (int i = start.getCol()-2; i >= 0; i-=2){
+        controlledsqs.add(b[start.getRow()][i]); 
+      }
+      for (int i = start.getRow()+2; i < 8; i+=2){
+        controlledsqs.add(b[i][start.getCol()]);
+      }
+      for (int i = start.getRow()-2; i >= 0; i-=2){
+        controlledsqs.add(b[i][start.getCol()]);
+      }
      return null;
     }
     
@@ -60,7 +73,56 @@ public class Piece {
     //returns an arraylist of squares which are legal to move to
     //please note that your piece must have some sort of logic. Just being able to move to every square on the board is not
     //going to score any points.
+
+    //Piece logic: helicopter
+    //The helicopter is very similar to a rook and knight hybrid. It is able to move horizontally and vertically and jump over any pieces obstructing the path. However,
+    //it comes with the drawback of only being able to land on squares of its originating color (i.e if it starts on a white square it can only occupy white squares) like
+    //a bishop. 
+
+    //precondition: the chess board and pieces have been initialized and are ready to be moved
+    //postcondition: returns what moves are legal for a given piece
     public ArrayList<Square> getLegalMoves(Board b, Square start){
-    	return null;
+    	ArrayList<Square> moves = new ArrayList<Square>();
+    for (int i = start.getCol()+2; i < 8; i+=2){
+      if(b.getSquareArray()[start.getRow()][i].getOccupyingPiece()!= null){
+        if(b.getSquareArray()[start.getRow()][i].getOccupyingPiece().getColor() != b.getSquareArray()[start.getRow()][start.getCol()].getOccupyingPiece().getColor()){
+          moves.add(b.getSquareArray()[start.getRow()][i]);
+        }
+      }
+        else{
+        moves.add(b.getSquareArray()[start.getRow()][i]);
+      } 
     }
-}
+    for (int i = start.getCol()-2; i >= 0; i-=2){
+      if(b.getSquareArray()[start.getRow()][i].getOccupyingPiece()!= null){
+        if(b.getSquareArray()[start.getRow()][i].getOccupyingPiece().getColor() != b.getSquareArray()[start.getRow()][start.getCol()].getOccupyingPiece().getColor()){
+          moves.add(b.getSquareArray()[start.getRow()][i]);
+        }
+      }
+        else{
+        moves.add(b.getSquareArray()[start.getRow()][i]);
+      } 
+  }
+    for (int i = start.getRow()+2; i < 8; i+=2){
+      if(b.getSquareArray()[i][start.getCol()].getOccupyingPiece() != null){
+        if(b.getSquareArray()[i][start.getCol()].getOccupyingPiece().getColor() != b.getSquareArray()[start.getRow()][start.getCol()].getOccupyingPiece().getColor()){
+          moves.add(b.getSquareArray()[i][start.getCol()]);
+        }
+      }
+      else{
+          moves.add(b.getSquareArray()[i][start.getCol()]);
+      }
+    }
+    for (int i = start.getRow()-2; i >= 0; i-=2){
+      if(b.getSquareArray()[i][start.getCol()].getOccupyingPiece() != null){
+        if(b.getSquareArray()[i][start.getCol()].getOccupyingPiece().getColor() != b.getSquareArray()[start.getRow()][start.getCol()].getOccupyingPiece().getColor()){
+          moves.add(b.getSquareArray()[i][start.getCol()]);
+        }
+      }
+      else{
+        moves.add(b.getSquareArray()[i][start.getCol()]);
+      }
+    }
+    return moves;
+    }
+  }
