@@ -40,7 +40,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     private final GameWindow g;
  
     //contains true if it's white's turn.
-    private boolean whiteTurn;
+    private boolean whiteTurn = true;
 
     //if the player is currently dragging a piece this variable contains it.
     private Piece currPiece;
@@ -88,6 +88,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
         whiteTurn = true;
 
+
     }
 
     
@@ -99,7 +100,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
             board[1][i].put(new Piece(false, RESOURCES_BPAWN_PNG));
         }
         for (int i = 0; i < 8; i++){
-            board[6][i].put(new Piece(false, RESOURCES_WPAWN_PNG));
+            board[6][i].put(new Piece(true, RESOURCES_WPAWN_PNG));
         }
         board[0][0].put(new Piece(false, RESOURCES_BROOK_PNG));
         board[0][7].put(new Piece(false, RESOURCES_BROOK_PNG));
@@ -147,6 +148,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 Square sq = board[x][y];
+                //try if(fromMoveSquare != null && sq == fromMoveSquare)
                 if(sq == fromMoveSquare)
                 	 sq.setBorder(BorderFactory.createLineBorder(Color.blue));
                 sq.paintComponent(g);
@@ -164,9 +166,10 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public void mousePressed(MouseEvent e) {
         currX = e.getX();
         currY = e.getY();
+        
 
         Square sq = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
-
+        sq.setDisplay(false);
         if (sq.isOccupied()) {
             currPiece = sq.getOccupyingPiece();
             fromMoveSquare = sq;

@@ -83,6 +83,7 @@ public class Piece {
     //postcondition: returns what moves are legal for a given piece
     public ArrayList<Square> getLegalMoves(Board b, Square start){
     	ArrayList<Square> moves = new ArrayList<Square>();
+      if(b.getTurn() == b.getSquareArray()[start.getRow()][start.getCol()].getOccupyingPiece().getColor()){
     for (int i = start.getCol()+2; i < 8; i+=2){
       if(b.getSquareArray()[start.getRow()][i].getOccupyingPiece()!= null){
         if(b.getSquareArray()[start.getRow()][i].getOccupyingPiece().getColor() != b.getSquareArray()[start.getRow()][start.getCol()].getOccupyingPiece().getColor()){
@@ -124,5 +125,9 @@ public class Piece {
       }
     }
     return moves;
+  }
+  else{
+    return moves;
+  }
     }
   }
