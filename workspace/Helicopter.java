@@ -1,4 +1,8 @@
-
+//Author: Jackson Hammack
+//Piece name: Helicopter
+//The helicopter is very similar to a rook and knight hybrid. It is able to move horizontally and vertically and jump over any pieces obstructing the path. However,
+//it comes with the drawback of only being able to land on squares of its originating color (i.e if it starts on a white square it can only occupy white squares) like
+//a bishop.
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -11,41 +15,29 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 //you will need to implement two functions in this file.
-public class Piece {
-    protected final boolean color;
-    protected BufferedImage img;
-    
-    public Piece(boolean isWhite, String img_file) {
-        this.color = isWhite;
-        
-        try {
-            if (this.img == null) {
-              this.img = ImageIO.read(getClass().getResource(img_file));
-            }
-          } catch (IOException e) {
-            System.out.println("File not found: " + e.getMessage());
-          }
-    }
-    
-    
-
-    
-    public boolean getColor() {
-        return color;
-    }
-    
-    public Image getImage() {
-        return img;
-    }
-    
-    public void draw(Graphics g, Square currentSquare) {
-        int x = currentSquare.getX();
-        int y = currentSquare.getY();
-        
-        g.drawImage(this.img, x, y, null);
+public class Helicopter extends Piece {
+    private boolean color;
+ 
+    public Helicopter(boolean isWhite, String img_file) {
+        super(isWhite, img_file);
     }
 
+    public String getColorName(){
+      if (color){
+        return "white";
+      }
+      else if (!color){
+        return "black";
+      }
+      else{
+        return null;
+      }
 
+    }
+    public String toString(){
+      return "A " + getColorName() + " Helicopter";
+    }
+    
     
     // TO BE IMPLEMENTED!
     //return a list of every square that is "controlled" by this piece. A square is controlled
@@ -132,4 +124,3 @@ public class Piece {
   }
     }
   }
-  
